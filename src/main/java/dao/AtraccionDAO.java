@@ -44,8 +44,7 @@ public class AtraccionDAO {
 				filasModificadas = declaracion.executeUpdate();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.exit(1);
+			throw new DatosPerdidosError(e);
 		}
 		return filasModificadas;
 	}
