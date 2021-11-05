@@ -11,11 +11,11 @@ import modelo.Atraccion;
 import modelo.Itinerario;
 import modelo.Promocion;
 import modelo.Sugerencia;
+import tierraMediaConsola.TierraMedia;
 
 public class ItinerarioDAO {
 
-	public HashMap<Integer, Itinerario> cargarItinerarios(HashMap<Integer, Promocion> promociones,
-			HashMap<Integer, Atraccion> atracciones) {
+	public HashMap<Integer, Itinerario> cargarItinerarios() {
 
 		String sqlItinerarios = "SELECT id, costo, duracion FROM itinerarios";
 		String sqlIdPromociones = "SELECT fk_promocion FROM compras_de_itinerarios WHERE fk_itinerario = ? AND fk_promocion IS NOT NULL";
@@ -37,8 +37,8 @@ public class ItinerarioDAO {
 				ResultSet resultIdPromociones = declarIdPromociones.executeQuery();
 				ResultSet resultIdAtracciones = declarIdAtracciones.executeQuery();
 
-				itinerarios.put(idItinerario, crearItinerario(promociones, atracciones, resultItinerario,
-						resultIdPromociones, resultIdAtracciones));
+				itinerarios.put(idItinerario,
+						crearItinerario(resultItinerario, resultIdPromociones, resultIdAtracciones));
 			}
 		} catch (Exception e) {
 			throw new DatosPerdidosError(e);
@@ -49,19 +49,19 @@ public class ItinerarioDAO {
 	public int actualizar(Itinerario itinerario) {
 		String sql = "UPDATE itinerarios SET costo = ?, duracion = ? WHERE id = ?";
 		int filasModificadas = 0;
-		
+
 		try {
 			Connection conexion = ProveedorDeConexion.getConexion();
 			PreparedStatement declaracion = conexion.prepareStatement(sql);
-			
+
 			declaracion.setInt(1, itinerario.getCostoDelItinerario());
 			declaracion.setDouble(2, itinerario.getDuracionDelItinerario());
 			declaracion.setInt(3, itinerario.getFkUsuario());
-			
+
 			insertarCompras(itinerario, conexion);
 			filasModificadas = declaracion.executeUpdate();
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new DatosPerdidosError(e);
 		}
 		return filasModificadas;
@@ -73,7 +73,7 @@ public class ItinerarioDAO {
 
 		PreparedStatement declarPromoComprada = conexion.prepareStatement(sqlPromoComprada);
 		PreparedStatement declarAtracComprada = conexion.prepareStatement(sqlAtracComprada);
-		ArrayList<Sugerencia> sugerenciasCompradas = itinerario.getSugerenciasDiarias();
+		ArrayList<Sugerencia> sugerenciasCompradas = itinerario.getSugerenciasCompradas();
 
 		for (Sugerencia sugerencia : sugerenciasCompradas) {
 			if (sugerencia.esPromocion()) {
@@ -88,11 +88,16 @@ public class ItinerarioDAO {
 		}
 	}
 
-	private Itinerario crearItinerario(HashMap<Integer, Promocion> promociones, HashMap<Integer, Atraccion> atracciones,
-			ResultSet resultItinerario, ResultSet resultIdPromo, ResultSet resultIdAtrac) throws Exception {
+	private Itinerario crearItinerario(ResultSet resultItinerario, ResultSet resultIdPromo, ResultSet resultIdAtrac)
+			throws Exception {
 		int fkUsuario = resultItinerario.getInt("id");
 		int costo = resultItinerario.getInt("costo");
 		double duracion = resultItinerario.getDouble("duracion");
+
+		TierraMedia tierraMedia = TierraMedia.getInstancia();
+		HashMap<Integer, Atraccion> atracciones = tierraMedia.getAtracciones();
+		HashMap<Integer, Promocion> promociones = tierraMedia.getPromociones();
+
 		ArrayList<Sugerencia> sugerenciasYaCompradas = new ArrayList<Sugerencia>();
 
 		while (resultIdPromo.next()) {

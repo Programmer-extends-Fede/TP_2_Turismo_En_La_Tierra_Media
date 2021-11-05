@@ -60,11 +60,11 @@ public class UsuarioTest {
 		ArrayList<Sugerencia> compras = new ArrayList<Sugerencia>(misAtracciones);
 		Itinerario miItinerario = new Itinerario(1, compras, 10, 5);
 		
-		assertTrue(usuario.getItinerario().getSugerenciasYaCompradas().isEmpty());
+		assertTrue(usuario.getItinerario().getSugerenciasCargadas().isEmpty());
 		
 		usuario.setItinerario(miItinerario);
 		
-		assertFalse(usuario.getItinerario().getSugerenciasYaCompradas().isEmpty());
+		assertFalse(usuario.getItinerario().getSugerenciasCargadas().isEmpty());
 		
 	}
 }

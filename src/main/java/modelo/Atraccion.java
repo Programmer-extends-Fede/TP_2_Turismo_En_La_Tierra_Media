@@ -60,11 +60,10 @@ public class Atraccion implements Sugerencia, Comparable<Atraccion> {
 	public void restarCupo() {
 		this.cupo--;
 	}
-
+	
 	@Override
-	public String toString() {
-		return this.nombre + ": de tipo " + this.tipo + ". Su precio es de " + this.precio
-				+ " monedas. Su duracion de " + this.duracion + " hs.\n";
+	public boolean tieneCupo() {
+		return this.cupo > 0;
 	}
 
 	@Override
@@ -72,6 +71,12 @@ public class Atraccion implements Sugerencia, Comparable<Atraccion> {
 		return !atraccionesCompradas.contains(this);
 	}
 
+	@Override
+	public String toString() {
+		return this.nombre + ": de tipo " + this.tipo + ". Su precio es de " + this.precio
+				+ " monedas. Su duracion de " + this.duracion + " hs.\n";
+	}
+	
 	@Override
 	public int compareTo(Atraccion o) {
 		return -Integer.compare(this.precio, o.precio);
@@ -95,6 +100,4 @@ public class Atraccion implements Sugerencia, Comparable<Atraccion> {
 				&& id == other.id && Objects.equals(nombre, other.nombre) && precio == other.precio
 				&& Objects.equals(tipo, other.tipo);
 	}
-
-	
 }

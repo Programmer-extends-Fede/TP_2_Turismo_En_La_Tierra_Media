@@ -12,13 +12,17 @@ import modelo.Promocion;
 import modelo.PromocionAPorB;
 import modelo.PromocionAbsoluta;
 import modelo.PromocionPorcentual;
+import tierraMediaConsola.TierraMedia;
 
 public class PromocionDAO {
 
-	public HashMap<Integer, Promocion> cargarPromociones(HashMap<Integer, Atraccion> atracciones) {
+	public HashMap<Integer, Promocion> cargarPromociones() {
 		String sqlDatosPromocion = "SELECT * FROM promociones";
-		String sqlAtraccEnPromocion = "SELECT a.id AS \"id atraccion\" FROM promociones AS \"p\", atracciones_en_promocion AS \"ap\", atracciones AS \"a\" WHERE p.id = ? AND p.id = ap.fk_promocion AND ap.fk_atraccion = a.id";
+		String sqlAtraccEnPromocion = "SELECT fk_atraccion AS 'id atraccion' FROM atracciones_en_promocion WHERE fk_promocion = ?";
 		HashMap<Integer, Promocion> promociones = new HashMap<Integer, Promocion>();
+		
+		TierraMedia tierraMedia = TierraMedia.getInstancia();
+		HashMap<Integer, Atraccion> atracciones = tierraMedia.getAtracciones();
 
 		try {
 			Connection conexion = ProveedorDeConexion.getConexion();

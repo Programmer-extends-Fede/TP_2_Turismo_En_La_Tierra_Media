@@ -24,7 +24,7 @@ public class TierraMedia {
 	private TierraMedia() {
 	}
 	
-	public synchronized static TierraMedia getTierraMedia() {
+	public synchronized static TierraMedia getInstancia() {
 		if (tierraMedia == null) {
 			tierraMedia = new TierraMedia();
 			tierraMedia.construirAtracciones();
@@ -48,7 +48,7 @@ public class TierraMedia {
 	private void construirPromociones() {
 		if (!atracciones.isEmpty()) {
 			PromocionDAO promocionDAO = FabricaDAO.getPromocionDAO();
-			promociones = promocionDAO.cargarPromociones(this.atracciones);
+			promociones = promocionDAO.cargarPromociones();
 		}
 	}
 

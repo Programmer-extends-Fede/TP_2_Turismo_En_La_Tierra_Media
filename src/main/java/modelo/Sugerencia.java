@@ -21,5 +21,6 @@ public interface Sugerencia {
 	public void restarCupo();
 
 	public boolean noEstaIncluidaEn(ArrayList<Atraccion> atraccionesCompradas);
-
+	
+	public boolean tieneCupo();
 }

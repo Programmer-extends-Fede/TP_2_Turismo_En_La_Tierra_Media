@@ -45,7 +45,7 @@ public class ItinerarioTest {
 		Itinerario miItinerario = new Itinerario(1, compras, 25, 9);
 
 		assertNotNull(miItinerario);
-		assertFalse(miItinerario.getSugerenciasYaCompradas().isEmpty());
+		assertFalse(miItinerario.getSugerenciasCargadas().isEmpty());
 		assertEquals(25, miItinerario.getCostoDelItinerario());
 		assertEquals(9, miItinerario.getDuracionDelItinerario(),0);
 	}
@@ -60,7 +60,7 @@ public class ItinerarioTest {
 		double duracionObtenida = itinerario.getDuracionDelItinerario();
 		double duracionEsperada = 12;
 
-		assertFalse(itinerario.getSugerenciasDiarias().isEmpty());
+		assertFalse(itinerario.getSugerenciasCompradas().isEmpty());
 		assertEquals(costoEsperado, costoObtenido);
 		assertEquals(duracionEsperada, duracionObtenida, 0);
 	}

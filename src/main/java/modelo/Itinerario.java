@@ -6,8 +6,9 @@ import java.util.Objects;
 public class Itinerario {
 
 	private int fkUsuario;
-	private ArrayList<Sugerencia> sugerenciasDiarias = new ArrayList<Sugerencia>();
-	private ArrayList<Sugerencia> sugerenciasYaCompradas = new ArrayList<Sugerencia>();
+	private ArrayList<Sugerencia> sugerenciasCompradas = new ArrayList<Sugerencia>();
+	private ArrayList<Sugerencia> sugerenciasCargadas = new ArrayList<Sugerencia>();
+	private ArrayList<Atraccion> atraccionesCompradas = new ArrayList<Atraccion>();
 	private int costoDelItinerario = 0;
 	private double duracionDelItinerario = 0;
 
@@ -15,20 +16,28 @@ public class Itinerario {
 		this.fkUsuario = id;
 	}
 
-	public Itinerario(int idUsuario, ArrayList<Sugerencia> sugerenciasYaCompradas, int costoDelItinerario,
+	public Itinerario(int idUsuario, ArrayList<Sugerencia> sugerenciasCompAnteriormente, int costoDelItinerario,
 			double duracionDelItinerario) {
 		this.fkUsuario = idUsuario;
-		this.sugerenciasYaCompradas = sugerenciasYaCompradas;
+		this.sugerenciasCargadas = sugerenciasCompAnteriormente;
 		this.costoDelItinerario = costoDelItinerario;
 		this.duracionDelItinerario = duracionDelItinerario;
+
+		for (Sugerencia sugerencia : sugerenciasCompAnteriormente) {
+			agregarAtraccionComprada(sugerencia);
+		}
 	}
 
-	public ArrayList<Sugerencia> getSugerenciasDiarias() {
-		return sugerenciasDiarias;
+	public ArrayList<Sugerencia> getSugerenciasCompradas() {
+		return sugerenciasCompradas;
 	}
 
-	public ArrayList<Sugerencia> getSugerenciasYaCompradas() {
-		return sugerenciasYaCompradas;
+	public ArrayList<Sugerencia> getSugerenciasCargadas() {
+		return sugerenciasCargadas;
+	}
+
+	public ArrayList<Atraccion> getAtraccionesCompradas() {
+		return this.atraccionesCompradas;
 	}
 
 	public int getFkUsuario() {
@@ -44,16 +53,31 @@ public class Itinerario {
 	}
 
 	public void agregarLaCompraDe(Sugerencia unaSugerencia) {
-		this.sugerenciasDiarias.add(unaSugerencia);
+		this.sugerenciasCompradas.add(unaSugerencia);
 		this.costoDelItinerario += unaSugerencia.getPrecio();
 		this.duracionDelItinerario += unaSugerencia.getDuracion();
+
+		agregarAtraccionComprada(unaSugerencia);
+	}
+
+	public boolean noTieneA(Sugerencia unaSugerencia) {
+		return unaSugerencia.noEstaIncluidaEn(this.atraccionesCompradas);
+	}
+
+	private void agregarAtraccionComprada(Sugerencia sugerencia) {
+		if (sugerencia.esPromocion()) {
+			Promocion miPromo = (Promocion) sugerencia;
+			atraccionesCompradas.addAll(miPromo.getAtracciones());
+		} else {
+			atraccionesCompradas.add((Atraccion) sugerencia);
+		}
 	}
 
 	@Override
 	public String toString() {
 
-		ArrayList<Sugerencia> todasLasSugerencias = new ArrayList<Sugerencia>(this.sugerenciasYaCompradas);
-		todasLasSugerencias.addAll(sugerenciasDiarias);
+		ArrayList<Sugerencia> todasLasSugerencias = new ArrayList<Sugerencia>(this.sugerenciasCargadas);
+		todasLasSugerencias.addAll(sugerenciasCompradas);
 		String sugerenciasDiariasLimpio = todasLasSugerencias.toString().replace("[", " ").replace(", ", "\n ")
 				.replace("]", "\n");
 		return sugerenciasDiariasLimpio + ("\nCosto total: " + this.costoDelItinerario
@@ -62,8 +86,8 @@ public class Itinerario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(costoDelItinerario, duracionDelItinerario, fkUsuario, sugerenciasDiarias,
-				sugerenciasYaCompradas);
+		return Objects.hash(costoDelItinerario, duracionDelItinerario, fkUsuario, sugerenciasCompradas,
+				sugerenciasCargadas);
 	}
 
 	@Override
@@ -78,7 +102,7 @@ public class Itinerario {
 		return costoDelItinerario == other.costoDelItinerario
 				&& Double.doubleToLongBits(duracionDelItinerario) == Double
 						.doubleToLongBits(other.duracionDelItinerario)
-				&& fkUsuario == other.fkUsuario && Objects.equals(sugerenciasDiarias, other.sugerenciasDiarias)
-				&& Objects.equals(sugerenciasYaCompradas, other.sugerenciasYaCompradas);
+				&& fkUsuario == other.fkUsuario && Objects.equals(sugerenciasCompradas, other.sugerenciasCompradas)
+				&& Objects.equals(sugerenciasCargadas, other.sugerenciasCargadas);
 	}
 }

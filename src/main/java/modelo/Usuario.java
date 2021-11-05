@@ -47,6 +47,14 @@ public class Usuario {
 	public void setItinerario(Itinerario itinerario) {
 		this.itinerario = itinerario;
 	}
+	
+	public boolean puedeComprarA(Sugerencia unaSugerencia) {
+		boolean leAlcanzaDinero = this.dineroDisponible > unaSugerencia.getPrecio();
+		boolean leAlcanzaTiempo = this.tiempoDisponible > unaSugerencia.getDuracion();
+		boolean noSeCompro = this.itinerario.noTieneA(unaSugerencia);
+		
+		return  leAlcanzaDinero && leAlcanzaTiempo && noSeCompro;
+	}
 
 	public void comprar(Sugerencia unaSugerencia) {
 		this.dineroDisponible -= unaSugerencia.getPrecio();

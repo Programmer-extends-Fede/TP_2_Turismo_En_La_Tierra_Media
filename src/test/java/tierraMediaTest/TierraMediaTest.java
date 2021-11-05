@@ -11,15 +11,15 @@ public class TierraMediaTest {
 
 	@Test
 	public void tierraMediaConstruida() {
-		TierraMedia tierraMedia = TierraMedia.getTierraMedia();
+		TierraMedia tierraMedia = TierraMedia.getInstancia();
 		
 		assertNotNull(tierraMedia);
 	}
 	
 	@Test 
 	public void soloExisteUnaTierraMediaTest(){		
-		TierraMedia tierraMedia = TierraMedia.getTierraMedia();
-		TierraMedia otraTierraMedia = TierraMedia.getTierraMedia();
+		TierraMedia tierraMedia = TierraMedia.getInstancia();
+		TierraMedia otraTierraMedia = TierraMedia.getInstancia();
 		
 		assertNotNull(tierraMedia);
 		assertEquals(tierraMedia, otraTierraMedia);

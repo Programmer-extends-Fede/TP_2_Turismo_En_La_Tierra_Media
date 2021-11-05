@@ -80,9 +80,8 @@ public abstract class Promocion implements Sugerencia {
 	}
 
 	@Override
-	public String toString() {
-		return getNombre() + ". Tipo " + this.tipoDePromocion + ". Su costo es de " + getPrecio()
-				+ " monedas. Su duracion de " + getDuracion() + " hs.\n";
+	public boolean tieneCupo() {
+		return getCupo() > 0;
 	}
 
 	@Override
@@ -95,6 +94,12 @@ public abstract class Promocion implements Sugerencia {
 			}
 		}
 		return noEstaIncluida;
+	}
+
+	@Override
+	public String toString() {
+		return getNombre() + ". Tipo " + this.tipoDePromocion + ". Su costo es de " + getPrecio()
+				+ " monedas. Su duracion de " + getDuracion() + " hs.\n";
 	}
 
 	@Override
@@ -114,5 +119,5 @@ public abstract class Promocion implements Sugerencia {
 		return Objects.equals(atracciones, other.atracciones) && id == other.id && Objects.equals(nombre, other.nombre)
 				&& Objects.equals(tipoDePromocion, other.tipoDePromocion);
 	}
-	
+
 }

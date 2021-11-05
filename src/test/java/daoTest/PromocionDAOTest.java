@@ -13,7 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dao.AtraccionDAO;
 import dao.FabricaDAO;
 import dao.PromocionDAO;
 import jdbc.ProveedorDeConexion;
@@ -46,11 +45,9 @@ public class PromocionDAOTest {
 		Promocion promoEsperada = new PromocionPorcentual(1, "Pack Aventuras", atraccionesEsperadas, 20);
 		HashMap<Integer, Promocion> promocionesEsperadas = new HashMap<Integer, Promocion>();
 
-		AtraccionDAO atraccionDAO = FabricaDAO.getAtraccionDAO();
-		HashMap<Integer, Atraccion> atraccionesObtenidas = atraccionDAO.cargarAtracciones();
 		PromocionDAO promocionDAO = FabricaDAO.getPromocionDAO();
 
-		HashMap<Integer, Promocion> promocionesObtenidas = promocionDAO.cargarPromociones(atraccionesObtenidas);
+		HashMap<Integer, Promocion> promocionesObtenidas = promocionDAO.cargarPromociones();
 		promocionesEsperadas.put(promoEsperada.getId(), promoEsperada);
 
 		assertNotNull(promocionesObtenidas);

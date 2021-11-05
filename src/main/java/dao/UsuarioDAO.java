@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import jdbc.ProveedorDeConexion;
 import modelo.Itinerario;
 import modelo.Usuario;
-import tierraMediaConsola.TierraMedia;
 
 public class UsuarioDAO {
 
@@ -22,9 +21,7 @@ public class UsuarioDAO {
 			ResultSet resultados = declaracion.executeQuery();
 			
 			ItinerarioDAO itinerarioDAO = FabricaDAO.getItinerarioDAO();
-			TierraMedia tierraMedia = TierraMedia.getTierraMedia();
-			HashMap<Integer, Itinerario> itinerarios = itinerarioDAO.cargarItinerarios(tierraMedia.getPromociones(),
-					tierraMedia.getAtracciones());
+			HashMap<Integer, Itinerario> itinerarios = itinerarioDAO.cargarItinerarios();
 
 			while (resultados.next()) {
 				usuarios.put(resultados.getInt("id"), crearUsuario(resultados));
