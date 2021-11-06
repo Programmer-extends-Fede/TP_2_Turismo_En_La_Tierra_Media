@@ -65,6 +65,32 @@ public class UsuarioTest {
 		usuario.setItinerario(miItinerario);
 		
 		assertFalse(usuario.getItinerario().getSugerenciasCargadas().isEmpty());
-		
+	}
+	
+	@Test
+	public void usuarioPuedeComprarTest() {
+		int dineroDisp = usuario.getDineroDisponible();
+		double tiempoDisp = usuario.getTiempoDisponible();
+		Atraccion atraccion = new Atraccion(1, "El Coliseo", dineroDisp, tiempoDisp, 1, "Paisaje");
+
+		assertTrue(usuario.puedeComprarA(atraccion));
+	}
+
+	@Test
+	public void usuarioNoLeAlcanzaDineroTest() {
+		int dineroDisp = usuario.getDineroDisponible();
+		double tiempoDisp = usuario.getTiempoDisponible();
+		Atraccion atraccion = new Atraccion(1, "El Coliseo", dineroDisp + 1, tiempoDisp, 1, "Paisaje");
+
+		assertFalse(usuario.puedeComprarA(atraccion));
+	}
+
+	@Test
+	public void usuarioNoLeAlcanzaTiempoTest() {
+		int dineroDisp = usuario.getDineroDisponible();
+		double tiempoDisp = usuario.getTiempoDisponible();
+		Atraccion atraccion = new Atraccion(1, "El Coliseo", dineroDisp, tiempoDisp + 1, 1, "Paisaje");
+
+		assertFalse(usuario.puedeComprarA(atraccion));
 	}
 }

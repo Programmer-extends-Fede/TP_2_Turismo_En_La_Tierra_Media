@@ -65,6 +65,19 @@ public class PromocionAbsolutaTest {
 
 		assertEquals(cupoEsperado, cupoObtenido);
 	}
+	
+	@Test
+	public void noMostrarPromocionSiNoTieneCupoTest() {
+		Atraccion atrac1 = new Atraccion(1, "El Coliseo", 2, 2, 1, "Paisaje");
+		Atraccion atrac2 = new Atraccion(3, "Zafari", 3, 10, 10, "Aventuras");
+		ArrayList<Atraccion> atracciones = new ArrayList<Atraccion>();
+		atracciones.add(atrac1);
+		atracciones.add(atrac2);
+		Promocion promo = new PromocionAbsoluta(1, "Pack 1", atracciones, 25);
+		promo.restarCupo();
+
+		assertFalse(promo.tieneCupo());
+	}
 
 	@Test
 	public void obtenerDuracionDePromocionTest() {

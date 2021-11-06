@@ -7,12 +7,16 @@ import dao.AtraccionDAO;
 import dao.FabricaDAO;
 import dao.ItinerarioDAO;
 import dao.UsuarioDAO;
+import jdbc.ProveedorDeConexion;
 import modelo.Itinerario;
 import modelo.Sugerencia;
 import modelo.Usuario;
 
 public class Consola {
 
+	private TierraMedia tierraMedia;
+	private ArrayList<Usuario> usuarios;
+	private ArrayList<Sugerencia> sugerencias;
 	private Scanner entrada = new Scanner(System.in);
 	private boolean salir = false;
 	private final String ENTRADA_INCORRECTA = "<<<ENTRADA INCORRECTA>>>".indent(50);
@@ -25,10 +29,13 @@ public class Consola {
 	private final String MENSAJE_FINAL = SUBRAYADO.indent(43)
 			+ "MUCHAS GRACIAS, YA NO QUEDAN USUARIOS POR VER".indent(43) + SUBRAYADO.indent(43);
 
+	public Consola() {
+		tierraMedia = TierraMedia.getInstancia();
+		usuarios = tierraMedia.getUsuarios();
+		sugerencias = tierraMedia.getSugerencias();
+	}
+
 	public void iniciarInteraccion() {
-		TierraMedia tierraMedia = TierraMedia.getInstancia();
-		ArrayList<Usuario> usuarios = tierraMedia.getUsuarios();
-		ArrayList<Sugerencia> sugerencias = tierraMedia.getSugerencias();
 		System.out.println(MENSAJE_INICIAL);
 
 		for (Usuario usuario : usuarios) {
@@ -46,7 +53,6 @@ public class Consola {
 				}
 				System.out.println("Su saldo actual es de " + usuario.getDineroDisponible()
 						+ " monedas y su tiempo disponible " + usuario.getTiempoDisponible() + " Hs.\n");
-
 			}
 			boolean seOferto = false;
 			for (Sugerencia laSugerencia : sugerencias) {
@@ -75,6 +81,7 @@ public class Consola {
 		}
 		System.out.println(MENSAJE_FINAL);
 		entrada.close();
+		ProveedorDeConexion.cerrarConexion();
 	}
 
 	private boolean ofertar(Sugerencia laSugerencia, Usuario usuario) {

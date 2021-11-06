@@ -30,21 +30,29 @@ public class AtraccionDAO {
 		return atracciones;
 	}
 
-	public int actualizarCupo(List<Atraccion> atracciones) {
+	public int actualizarCupo(int idAtraccion, int cupo) {
 		String sql = "UPDATE atracciones SET cupo = ? WHERE id = ?";
 		int filasModificadas = 0;
 		try {
 			Connection conexion = ProveedorDeConexion.getConexion();
 			PreparedStatement declaracion = conexion.prepareStatement(sql);
 
-			for (Atraccion atraccion : atracciones) {
-				declaracion.setInt(1, atraccion.getCupo());
-				declaracion.setInt(2, atraccion.getId());
+			declaracion.setInt(1, cupo);
+			declaracion.setInt(2, idAtraccion);
 
-				filasModificadas = declaracion.executeUpdate();
-			}
+			filasModificadas = declaracion.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new DatosPerdidosError(e);
+		}
+		return filasModificadas;
+	}
+
+	public int actualizarCupo(List<Atraccion> atracciones) {
+		int filasModificadas = 0;
+
+		for (Atraccion atraccion : atracciones) {
+			filasModificadas += actualizarCupo(atraccion.getId(), atraccion.getCupo());
 		}
 		return filasModificadas;
 	}

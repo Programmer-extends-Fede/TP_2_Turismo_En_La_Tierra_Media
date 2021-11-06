@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import modelo.Atraccion;
 import modelo.Promocion;
+import modelo.PromocionAbsoluta;
 import modelo.PromocionPorcentual;
 
 public class PromocionPorcentualTest {
@@ -63,6 +64,19 @@ public class PromocionPorcentualTest {
 		int cupoEsperado = 0;
 
 		assertEquals(cupoEsperado, cupoObtenido);
+	}
+	
+	@Test
+	public void noMostrarPromocionSiNoTieneCupoTest() {
+		Atraccion atrac1 = new Atraccion(1, "El Coliseo", 2, 2, 1, "Paisaje");
+		Atraccion atrac2 = new Atraccion(3, "Zafari", 3, 10, 10, "Aventuras");
+		ArrayList<Atraccion> atracciones = new ArrayList<Atraccion>();
+		atracciones.add(atrac1);
+		atracciones.add(atrac2);
+		Promocion promo = new PromocionAbsoluta(1, "Pack 1", atracciones, 15);
+		promo.restarCupo();
+
+		assertFalse(promo.tieneCupo());
 	}
 
 	@Test

@@ -3,6 +3,7 @@ package itinerarioTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,36 @@ public class ItinerarioTest {
 		assertFalse(itinerario.getSugerenciasCompradas().isEmpty());
 		assertEquals(costoEsperado, costoObtenido);
 		assertEquals(duracionEsperada, duracionObtenida, 0);
+	}
+	
+	@Test
+	public void mostrarSiSugerenciaSeComproTest() {
+		atraccion = new Atraccion(1, "El Coliseo", 10, 5, 1, "Paisaje");
+		atraccion2 = new Atraccion(2, "La Moria", 12, 6, 3, "Degustacion");
+		atraccion3 = new Atraccion(3, "La Comarca", 20, 2, 6, "Aventuras");
+		itinerario.agregarLaCompraDe(atraccion2);
+		itinerario.agregarLaCompraDe(atraccion3);
+
+		assertTrue(itinerario.noTieneA(atraccion));
+		assertFalse(itinerario.noTieneA(atraccion2));
+		assertFalse(itinerario.noTieneA(atraccion3));
+	}
+
+	@Test
+	public void mostrarSiSugerenciaSeComproAnteriormenteTest() {
+		atraccion = new Atraccion(1, "El Coliseo", 10, 5, 1, "Paisaje");
+		atraccion2 = new Atraccion(2, "La Moria", 12, 6, 3, "Degustacion");
+		atraccion3 = new Atraccion(3, "La Comarca", 20, 2, 6, "Aventuras");
+
+		ArrayList<Sugerencia> atraccionesYaCompradas = new ArrayList<Sugerencia>();
+		atraccionesYaCompradas.add(atraccion2);
+		atraccionesYaCompradas.add(atraccion3);
+		
+		Itinerario itinerario = new Itinerario(2, atraccionesYaCompradas, 42, 13);
+
+		assertTrue(itinerario.noTieneA(atraccion));
+		assertFalse(itinerario.noTieneA(atraccion2));
+		assertFalse(itinerario.noTieneA(atraccion3));
 	}
 
 }

@@ -37,6 +37,14 @@ public class AtraccionTest {
 	}
 	
 	@Test
+	public void noMostrarAtraccionSiNoTieneCupoTest() {
+		Atraccion atraccion = new Atraccion(1, "El Coliseo", 2, 2, 1, "Paisaje");
+		atraccion.restarCupo();
+
+		assertFalse(atraccion.tieneCupo());
+	}
+	
+	@Test
 	public void noEstaIncluidaTest() {
 		ArrayList<Atraccion> atraccionIncluida = new ArrayList<Atraccion>();
 		ArrayList<Atraccion> atraccionNoIncluida = new ArrayList<Atraccion>();

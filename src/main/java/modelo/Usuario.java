@@ -49,11 +49,12 @@ public class Usuario {
 	}
 	
 	public boolean puedeComprarA(Sugerencia unaSugerencia) {
-		boolean leAlcanzaDinero = this.dineroDisponible > unaSugerencia.getPrecio();
-		boolean leAlcanzaTiempo = this.tiempoDisponible > unaSugerencia.getDuracion();
+		boolean leAlcanzaDinero = this.dineroDisponible >= unaSugerencia.getPrecio();
+		boolean leAlcanzaTiempo = this.tiempoDisponible >= unaSugerencia.getDuracion();
+		//boolean tieneCupo =  0 > unaSugerencia.getCupo();
 		boolean noSeCompro = this.itinerario.noTieneA(unaSugerencia);
 		
-		return  leAlcanzaDinero && leAlcanzaTiempo && noSeCompro;
+		return  leAlcanzaDinero && leAlcanzaTiempo && noSeCompro; // && tieneCupo;
 	}
 
 	public void comprar(Sugerencia unaSugerencia) {

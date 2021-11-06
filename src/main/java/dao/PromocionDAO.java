@@ -59,7 +59,9 @@ public class PromocionDAO {
 			return new PromocionPorcentual(id, nombre, atraccionesDeProm, descuento);
 		else if (tipoPromocion.equalsIgnoreCase("Absoluta"))
 			return new PromocionAbsoluta(id, nombre, atraccionesDeProm, descuento);
-		else
+		else if(tipoPromocion.equalsIgnoreCase("AxB"))
 			return new PromocionAPorB(id, nombre, atraccionesDeProm, descuento);
+		else
+			throw new Error();
 	}
 }

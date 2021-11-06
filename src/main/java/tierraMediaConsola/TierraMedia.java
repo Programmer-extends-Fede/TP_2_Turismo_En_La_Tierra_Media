@@ -27,25 +27,25 @@ public class TierraMedia {
 	public synchronized static TierraMedia getInstancia() {
 		if (tierraMedia == null) {
 			tierraMedia = new TierraMedia();
-			tierraMedia.construirAtracciones();
-			tierraMedia.construirPromociones();
+			tierraMedia.cargarAtracciones();
+			tierraMedia.cargarPromociones();
 			tierraMedia.construirSugerencias();
-			tierraMedia.construirUsuarios();
+			tierraMedia.cargarUsuarios();
 		}
 		return tierraMedia;
 	}
 
-	private void construirUsuarios() {
+	private void cargarUsuarios() {
 		UsuarioDAO usuarioDAO = FabricaDAO.getUsuarioDAO();
 		usuarios = usuarioDAO.cargarUsuarios();
 	}
 
-	private void construirAtracciones() {
+	private void cargarAtracciones() {
 		AtraccionDAO atraccionDAO = FabricaDAO.getAtraccionDAO();
 		atracciones = atraccionDAO.cargarAtracciones();
 	}
 
-	private void construirPromociones() {
+	private void cargarPromociones() {
 		if (!atracciones.isEmpty()) {
 			PromocionDAO promocionDAO = FabricaDAO.getPromocionDAO();
 			promociones = promocionDAO.cargarPromociones();
