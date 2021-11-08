@@ -1,7 +1,7 @@
 package daoTest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -19,9 +19,7 @@ public class FabricaDAOTest {
 		AtraccionDAO otroAtraccionDAO = FabricaDAO.getAtraccionDAO();
 		
 		assertNotNull(atraccionDAO);
-		assertNotNull(otroAtraccionDAO);
-		assertEquals(atraccionDAO, otroAtraccionDAO);
-		assertEquals(atraccionDAO.hashCode(), otroAtraccionDAO.hashCode());
+		assertSame(atraccionDAO, otroAtraccionDAO);
 	}
 	
 	@Test
@@ -30,9 +28,7 @@ public class FabricaDAOTest {
 		PromocionDAO otroPromocionDAO = FabricaDAO.getPromocionDAO();
 		
 		assertNotNull(promocionDAO);
-		assertNotNull(otroPromocionDAO);
-		assertEquals(promocionDAO, otroPromocionDAO);
-		assertEquals(promocionDAO.hashCode(), otroPromocionDAO.hashCode());
+		assertSame(promocionDAO, otroPromocionDAO);
 	}
 	
 	@Test
@@ -41,9 +37,7 @@ public class FabricaDAOTest {
 		UsuarioDAO otroUsuarioDAO = FabricaDAO.getUsuarioDAO();
 		
 		assertNotNull(usuarioDAO);
-		assertNotNull(otroUsuarioDAO);
-		assertEquals(usuarioDAO, otroUsuarioDAO);
-		assertEquals(usuarioDAO.hashCode(), otroUsuarioDAO.hashCode());
+		assertSame(usuarioDAO, otroUsuarioDAO);
 	}
 	
 	@Test
@@ -52,8 +46,6 @@ public class FabricaDAOTest {
 		ItinerarioDAO otroItinerarioDAO = FabricaDAO.getItinerarioDAO();
 		
 		assertNotNull(itinerarioDAO);
-		assertNotNull(otroItinerarioDAO);
-		assertEquals(itinerarioDAO, otroItinerarioDAO);
-		assertEquals(itinerarioDAO.hashCode(), otroItinerarioDAO.hashCode());
+		assertSame(itinerarioDAO, otroItinerarioDAO);
 	}
 }

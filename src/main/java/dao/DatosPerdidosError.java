@@ -10,5 +10,4 @@ public class DatosPerdidosError extends RuntimeException {
 	public DatosPerdidosError(Exception e) {
 		super(e);
 	}
-
 }

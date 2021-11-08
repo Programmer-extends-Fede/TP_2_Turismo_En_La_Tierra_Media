@@ -14,12 +14,16 @@ public class ProveedorDeConexion {
 	public static Connection getConexion() throws SQLException {
 		if (conexion == null) {
 			conexion = DriverManager.getConnection(url);
+		} else if (conexion.isClosed()) {
+			conexion = DriverManager.getConnection(url);
 		}
 		return conexion;
 	}
 
 	public static Connection getConexion(String url) throws SQLException {
 		if (conexion == null) {
+			conexion = DriverManager.getConnection("jdbc:sqlite:" + url);
+		} else if (conexion.isClosed()) {
 			conexion = DriverManager.getConnection("jdbc:sqlite:" + url);
 		}
 		return conexion;

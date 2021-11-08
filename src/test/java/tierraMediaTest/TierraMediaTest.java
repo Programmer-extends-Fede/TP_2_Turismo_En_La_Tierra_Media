@@ -1,7 +1,7 @@
 package tierraMediaTest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -22,7 +22,6 @@ public class TierraMediaTest {
 		TierraMedia otraTierraMedia = TierraMedia.getInstancia();
 		
 		assertNotNull(tierraMedia);
-		assertEquals(tierraMedia, otraTierraMedia);
-		assertEquals(tierraMedia.hashCode(), otraTierraMedia.hashCode());
+		assertSame(tierraMedia, otraTierraMedia);
 	}
 }

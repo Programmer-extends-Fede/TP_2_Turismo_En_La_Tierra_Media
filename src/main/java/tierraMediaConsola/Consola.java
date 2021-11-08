@@ -114,5 +114,8 @@ public class Consola {
 		usuarioDAO.actualizar(usuario);
 		itinerarioDAO.actualizar(usuario.getItinerario());
 		atraccioDAO.actualizarCupo(usuario.getItinerario().getAtraccionesCompradas());
+		
+		/*Transaccion transaccion = new Transaccion();
+		transaccion.actualizarEnBBDD(usuario);*/
 	}
 }
